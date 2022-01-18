@@ -1,6 +1,10 @@
-# dependencies
-/node_modules
-package-lock.json
+.idea/
+.vscode/
+node_modules/
+build/
+tmp/
+temp/
 
-# misc
 .env
+ormconfig.json
+package-lock.json
