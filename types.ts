@@ -1,4 +1,4 @@
-export interface TObject {
+export interface IRow {
   currency: string,
   rate: string,
   bid: string,
