@@ -2,7 +2,9 @@ import { connection } from '../services/ormConnection';
 import { fetch3x } from '../helpers/fetchCurrencies';
 import { Currency } from "../entity/Currency";
 import { IRow } from '../../types';
+import { logger } from './logger';
 import { CronJob } from 'cron';
+
 
 const job = new CronJob('*/20 * * * *', async function() {
   try{
@@ -18,12 +20,21 @@ const job = new CronJob('*/20 * * * *', async function() {
         currency.currencyString = query;
         currency.createdAt = new Date;
         await connection.manager.save(currency);
-      }).catch(error => console.log(error));
+        logger.log({
+          level: 'success',
+          message: 'Success insert currencies',
+          date: new Date()
+        });
+      }).catch(error => { logger.log({ level: 'error', message: error });
+      });
     }else{
-      console.log('Limit of 3 requests/hour have been reached')
+      logger.log({
+        level: 'info',
+        message: 'Limit of 3 requests/hour have been reached'
+      });
     }
   }catch(err){
-    console.log(err)
+    logger.warn('error', new Error(err));
   }
 }, null, true, 'Europe/Warsaw');
 

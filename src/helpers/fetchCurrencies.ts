@@ -1,5 +1,7 @@
-import fetch from 'node-fetch';
+import { logger } from '../services/logger';
 import { IRow } from "../../types";
+import fetch from 'node-fetch';
+
 
 export const fetch3x = async (): Promise<Array<IRow>> => {
   try {
@@ -7,6 +9,6 @@ export const fetch3x = async (): Promise<Array<IRow>> => {
     const body = await response.json();
     return body;
   } catch (error) {
-    console.error(error)
+    logger.error({ level: 'error', additional: 'Fetch3x', message: error })
   }
 }
