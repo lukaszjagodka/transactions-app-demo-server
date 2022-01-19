@@ -6,7 +6,7 @@ export const fetch3x = async (): Promise<Array<IRow>> => {
     const response = await fetch('https://www.live-rates.com/rates');
     const body = await response.json();
     return body;
-  } catch (error: any) {
+  } catch (error) {
     throw error
   }
 }

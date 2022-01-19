@@ -1,5 +1,6 @@
 import express from 'express';
 import helmet from "helmet";
+import "reflect-metadata";
 import 'dotenv/config';
 
 import rates from './src/routes/rates';
