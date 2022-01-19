@@ -1,15 +1,16 @@
 import { Request, Response, Router } from 'express';
 import client from '../services/dbConnection';
 
+import { connection } from '../services/ormConnection';
+import { Currency } from "../entity/Currency";
+
 const router = Router()
 
 router.get('/', (req: Request, res: Response) => {
-    client.query(`SELECT * FROM "currencies" ORDER BY id DESC LIMIT 1`, function(err: Error, result: { rows: any }) {
-      if(err) {
-        return console.error('error running query', err);
-      }
-      return res.json(result.rows);
-    });
+    connection.then(async connection => {
+      let currencies = await connection.getRepository(Currency).findOne({ order: { id: "DESC" }});
+      return res.json(currencies);
+    }).catch(error => console.log(error));
 })
 
 export default router
