@@ -7,6 +7,6 @@ export const fetch3x = async (): Promise<Array<IRow>> => {
     const body = await response.json();
     return body;
   } catch (error) {
-    throw error
+    console.error(error)
   }
 }
