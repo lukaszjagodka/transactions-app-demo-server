@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn} from 'typeorm';
 
 @Entity()
 export class Currency {
@@ -8,6 +8,6 @@ export class Currency {
     @Column()
     currencyString: string;
 
-    @Column()
+    @CreateDateColumn()
     createdAt: Date;
 }
