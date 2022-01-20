@@ -2,7 +2,7 @@ import { connection } from '../database/connection/ormConnection';
 import { fetch3x } from '../helpers/fetchCurrencies';
 import { Currency } from '../database/entity/Currency';
 import { IRow, TPair } from '../types/types';
-import { logger } from './logger';
+import { logger } from '../utils/logs/logger';
 import { CronJob } from 'cron';
 
 const createCurrency = async (arrayOfCurrencies:Array<TPair>) => {
@@ -16,22 +16,24 @@ const createCurrency = async (arrayOfCurrencies:Array<TPair>) => {
   }
 };
 
+const createArrayCurrencies = (data: Array<IRow>) => {
+  const arrayOfCurrencies = [];
+  data.forEach(({ currency, rate }) => {
+    if(currency.includes('USD/') || currency.includes('/USD')){
+      arrayOfCurrencies.push({
+        pair: currency,
+        value: rate
+      });
+    }
+  });
+  return arrayOfCurrencies;
+};
+
 const job = new CronJob('*/20 * * * *', async function() {
   try{
     const data: Array<IRow> = await fetch3x();
     if(data.length > 1){
-      let objCurrencyPair = {};
-      const arrayOfCurrencies = [];
-      data.forEach(currencyInfo => {
-        if(currencyInfo.currency.includes('USD/') || currencyInfo.currency.includes('/USD')){
-          objCurrencyPair = {
-            pair: currencyInfo.currency,
-            value: currencyInfo.rate
-          };
-          arrayOfCurrencies.push(objCurrencyPair);
-        }
-      }),
-      createCurrency(arrayOfCurrencies);
+      createCurrency(createArrayCurrencies(data));
     }else{
       logger.log({
         level: 'info',
@@ -39,7 +41,7 @@ const job = new CronJob('*/20 * * * *', async function() {
       });
     }
   }catch(err){
-    logger.warn('error', new Error(err));
+    logger.log({ level: 'error', message: err });
   }
 }, null, true, 'Europe/Warsaw');
 
