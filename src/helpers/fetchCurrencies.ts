@@ -1,4 +1,4 @@
-import { logger } from '../services/logger';
+import { logger } from '../utils/logs/logger';
 import { IRow } from '../types/types';
 import fetch from 'node-fetch';
 
