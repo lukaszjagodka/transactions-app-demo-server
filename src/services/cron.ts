@@ -1,37 +1,37 @@
-import { connection } from '../services/ormConnection';
+import { connection } from '../database/connection/ormConnection';
 import { fetch3x } from '../helpers/fetchCurrencies';
-import { Currency } from "../entity/Currency";
-import { IRow } from '../../types';
+import { Currency } from '../database/entity/Currency';
+import { IRow, TPair } from '../../types';
 import { logger } from './logger';
 import { CronJob } from 'cron';
+
+const createCurrency = async (arrayOfCurrencies:Array<TPair>) => {
+  try {
+    const connect = await connection;
+    const currency = new Currency();
+    currency.currencyString = JSON.stringify(arrayOfCurrencies);
+    await connect.manager.save(currency);
+  } catch (err) {
+    logger.log({ level: 'error', message: err });
+  }
+};
 
 const job = new CronJob('*/20 * * * *', async function() {
   try{
     const data: Array<IRow> = await fetch3x();
     if(data.length > 1){
-      let objCurrencyPair = new Object();
-      const arrayOfCurrencies = new Array();
-      for(let i=0; i<data.length; i++){
-        if(data[i].currency.includes('USD/') || data[i].currency.includes('/USD')){
+      let objCurrencyPair = {};
+      const arrayOfCurrencies = [];
+      data.forEach(currencyInfo => {
+        if(currencyInfo.currency.includes('USD/') || currencyInfo.currency.includes('/USD')){
           objCurrencyPair = {
-            pair: data[i].currency,
-            value: data[i].rate
+            pair: currencyInfo.currency,
+            value: currencyInfo.rate
           };
-          arrayOfCurrencies.push(objCurrencyPair)
+          arrayOfCurrencies.push(objCurrencyPair);
         }
-      }
-      connection.then(async connection => {
-        let currency = new Currency();
-        currency.currencyString = JSON.stringify(arrayOfCurrencies);
-        currency.createdAt = new Date;
-        await connection.manager.save(currency);
-        logger.log({
-          level: 'info',
-          message: 'Success insert currencies',
-          date: new Date()
-        });
-      }).catch(error => { logger.log({ level: 'error', message: error });
-      });
+      }),
+      createCurrency(arrayOfCurrencies);
     }else{
       logger.log({
         level: 'info',
