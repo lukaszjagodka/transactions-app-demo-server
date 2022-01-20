@@ -1,6 +1,6 @@
 import express from 'express';
-import helmet from "helmet";
-import "reflect-metadata";
+import helmet from 'helmet';
+import 'reflect-metadata';
 import 'dotenv/config';
 
 import rates from './src/routes/rates';
@@ -15,5 +15,5 @@ app.use('/rates', rates);
 job.start();
 
 app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`)
-})
+  console.log(`Server listening at http://localhost:${port}`);
+});

@@ -7,5 +7,10 @@ export interface IRow {
   low: string,
   open: string,
   close: string,
-  timestamp: string,
+  timestamp: Date,
+}
+
+export type TPair = {
+  pair: string,
+  value: string
 }
