@@ -3,7 +3,7 @@ import helmet from 'helmet';
 import 'reflect-metadata';
 import 'dotenv/config';
 
-import rates from './src/routes/rates';
+import rates from './src/controllers/rates';
 import job from './src/services/cron';
 
 const app = express();
