@@ -2,6 +2,16 @@ import { connection } from '../database/connection/ormConnection';
 import { Account } from '../database/entity/Accounts';
 import { logger } from '../utils/logs/logger';
 
+export const findAccounts = async () => {
+  try {
+    const connect = await connection;
+    const getAllAccounts = await connect.getRepository(Account).find();
+    return getAllAccounts;
+  } catch (error) {
+    logger.log({ level: 'error', message: error });
+  }
+};
+
 export const saveAccounts = async (data: any) => {
   const { id, accountNumber, accountValue, currency } = data;
   try {
