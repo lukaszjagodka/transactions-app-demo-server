@@ -4,6 +4,7 @@ import 'reflect-metadata';
 import 'dotenv/config';
 import bodyParser from 'body-parser';
 import rates from './src/controllers/rates';
+import accounts from './src/controllers/accounts';
 import job from './src/services/cron';
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(bodyParser.json());
 
 app.use(helmet());
 app.use('/rates', rates);
+app.use('/accounts', accounts);
 
 job.start();
 
