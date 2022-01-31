@@ -1,5 +1,6 @@
 import { connection } from '../database/connection/ormConnection';
 import { Account } from '../database/entity/Accounts';
+import { IAccount } from '../types/types';
 import { logger } from '../utils/logs/logger';
 
 export const findAccounts = async () => {
@@ -12,11 +13,11 @@ export const findAccounts = async () => {
   }
 };
 
-export const saveAccounts = async (data: any) => {
-  const { id, accountNumber, accountValue, currency } = data;
+export const saveAccounts = async (data: IAccount) => {
+  const { name, accountNumber, accountValue, currency } = data;
   try {
     const account = new Account();
-    account.name = id;
+    account.name = name;
     account.accountNumber = accountNumber;
     account.accountValue = accountValue;
     account.currency = currency;
