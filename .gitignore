@@ -1,6 +1,14 @@
-# dependencies
-/node_modules
+.idea/
+.vscode/
+node_modules/
 package-lock.json
 
-# misc
+build/
+tmp/
+temp/
+
 .env
+ormconfig.json
+src/utils/logs/combined/*
+src/utils/logs/errors/*
+
