@@ -1,31 +1,26 @@
 import { connection } from '../database/connection/ormConnection';
 import { Account } from '../database/entity/Accounts';
-import { IAccount } from '../types/types';
 import { logger } from '../utils/logs/logger';
 
 export const findAccounts = async () => {
   try {
     const connect = await connection;
-    const getAllAccounts = await connect.getRepository(Account).find();
-    return getAllAccounts;
+    const getAccounts = await connect.getRepository(Account).find();
+    return getAccounts;
   } catch (error) {
     logger.log({ level: 'error', message: error });
   }
 };
 
-export const saveAccounts = async (data: IAccount) => {
+export const saveAccounts = async (data: Account) => {
   const { name, accountNumber, accountValue, currency } = data;
+  const connect = await connection;
   try {
-    const account = new Account();
-    account.name = name;
-    account.accountNumber = accountNumber;
-    account.accountValue = accountValue;
-    account.currency = currency;
-    (await connection).manager
-            .save(account)
-            .then(account => {
-                console.log('Account was saved.', account.id);
-            });
+    const newAccount: Partial<Account> = {
+      name, accountNumber, accountValue,currency
+    };
+    const account = connect.getRepository(Account).create(newAccount);
+    await connect.getRepository(Account).save(account);
     return 'account was saved';
   } catch (error) {
     logger.log({ level: 'error', message: error });
