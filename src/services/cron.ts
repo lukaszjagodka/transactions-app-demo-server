@@ -2,7 +2,7 @@ import { connection } from '../database/connection/ormConnection';
 import { fetch3x } from '../helpers/fetchCurrencies';
 import { Currency } from '../database/entity/Currency';
 import { IRow, TPair } from '../types/types';
-import { logger } from '../utils/logs/logger';
+import { logger } from '../utils/logger';
 import { CronJob } from 'cron';
 
 const createCurrency = async (arrayOfCurrencies:Array<TPair>) => {

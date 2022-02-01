@@ -9,6 +9,5 @@ temp/
 
 .env
 ormconfig.json
-src/utils/logs/combined/*
-src/utils/logs/errors/*
+/logs
 

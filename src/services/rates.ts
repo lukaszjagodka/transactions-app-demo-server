@@ -1,6 +1,6 @@
 import { connection } from '../database/connection/ormConnection';
 import { Currency } from '../database/entity/Currency';
-import { logger } from '../utils/logs/logger';
+import { logger } from '../utils/logger';
 
 export const findCurrency = async () => {
   try {

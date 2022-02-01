@@ -1,6 +1,6 @@
 import { connection } from '../database/connection/ormConnection';
 import { Account } from '../database/entity/Accounts';
-import { logger } from '../utils/logs/logger';
+import { logger } from '../utils/logger';
 
 export const findAccounts = async () => {
   try {

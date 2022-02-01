@@ -1,8 +1,9 @@
 import { createLogger, format, transports } from 'winston';
-const { combine, timestamp, prettyPrint } = format;
 import path from 'path';
-const infoDir = './src/utils/logs/combined';
-const errorDir = './src/utils/logs/errors';
+
+const { combine, timestamp, prettyPrint } = format;
+const infoDir = './logs/combined';
+const errorDir = './logs/errors';
 
 const mydate = new Date();
 const today = mydate.getFullYear() + '-' + ('0' + (mydate.getMonth() + 1)).slice(-2) + '-' + mydate.getDate();
@@ -41,3 +42,5 @@ if (process.env.NODE_ENV !== 'production') {
     format: format.simple(),
   }));
 }
+
+logger.end();
