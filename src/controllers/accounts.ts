@@ -1,7 +1,15 @@
 import { Request, Response, Router } from 'express';
-import { findAccounts, saveAccounts } from '../services/accounts';
+import { deleteAccount, findAccounts, saveAccounts } from '../services/accounts';
 
 const router = Router();
+
+router.post('/deleteaccount', async (req: Request, res: Response) => {
+  const response = await deleteAccount(req.body);
+  return res.json({
+    success: true,
+    response
+  });
+});
 
 router.get('/', async (req: Request, res: Response) => {
   const getAccounts = await findAccounts();
