@@ -1,5 +1,6 @@
 import { connection } from '../database/connection/ormConnection';
 import { Account } from '../database/entity/Accounts';
+import { IDeleteAccount } from '../types/types';
 import { logger } from '../utils/logger';
 
 export const findAccounts = async () => {
@@ -21,7 +22,22 @@ export const saveAccounts = async (data: Account) => {
     };
     const account = connect.getRepository(Account).create(newAccount);
     await connect.getRepository(Account).save(account);
-    return 'account was saved';
+    return 'account has been saved';
+  } catch (error) {
+    logger.log({ level: 'error', message: error });
+  }
+};
+
+export const deleteAccount = async (data: IDeleteAccount) => {
+  const { id } = data;
+  const connect = await connection;
+  try {
+    const accountRepository = connect.getRepository(Account);
+    const foundAccount = await accountRepository.findOne({ id });
+    if(foundAccount){
+      await accountRepository.remove(foundAccount);
+    }
+    return 'account has been deleted';
   } catch (error) {
     logger.log({ level: 'error', message: error });
   }

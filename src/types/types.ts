@@ -22,3 +22,7 @@ export type IAccount = {
   accountValue: number,
   currency: string
 }
+
+export interface IDeleteAccount {
+  id: number
+}
