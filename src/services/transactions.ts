@@ -4,6 +4,17 @@ import { Transaction } from '../database/entity/Transaction';
 import { TTransaction } from '../types/types';
 import { logger } from '../utils/logger';
 
+export const getTransactions = async (key: any) => {
+  const id:number = +Object.values(key)[0];
+  try {
+    const connect = await connection;
+    const getTransactions = await connect.getRepository(Transaction).find({ account: { id } });
+    return getTransactions;
+  } catch (error) {
+    logger.log({ level: 'error', message: error });
+  }
+};
+
 export const saveTransactions = async (data: TTransaction ) => {
   const { 
     accountId,
