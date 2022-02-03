@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, OneToMany } from 'typeorm';
+import { Transaction } from './Transaction';
 
 @Entity()
 export class Account {
@@ -16,6 +17,9 @@ export class Account {
   
   @Column()
   currency: string;
+
+  @OneToMany(type => Transaction, transaction => transaction.account)
+  transactions: Transaction[];
 
   @CreateDateColumn()
   createdAt: Date;
