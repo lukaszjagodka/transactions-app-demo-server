@@ -1,5 +1,5 @@
 import { connection } from '../database/connection/ormConnection';
-import { Account } from '../database/entity/Accounts';
+import { Account } from '../database/entity/Account';
 import { IDeleteAccount } from '../types/types';
 import { logger } from '../utils/logger';
 

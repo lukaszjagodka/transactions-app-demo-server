@@ -26,3 +26,15 @@ export type IAccount = {
 export interface IDeleteAccount {
   id: number
 }
+
+export type TTransaction = {
+  accountId: number;
+  name: string;
+  id: number;
+  date: string;
+  amountFirstPair: number;
+  currencyFirstPair: string;
+  rate: number;
+  amountSecondPair: number;
+  currencySecondPair: string;
+}
