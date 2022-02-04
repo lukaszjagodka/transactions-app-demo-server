@@ -35,6 +35,20 @@ export const deleteAccount = async (data: IDeleteAccount) => {
     const accountRepository = connect.getRepository(Account);
     const foundAccount = await accountRepository.findOne({id});
     await accountRepository.remove(foundAccount);
+    return 'account has been deleted';
+  } catch (error) {
+    logger.log({ level: 'error', message: error });
+  }
+};
+
+export const updateAccountValue = async (data: any) => {
+  const { accountValue, id } = data;
+  const connect = await connection;
+  try {
+    const accountRepository = connect.getRepository(Account);
+    const foundAccount = await accountRepository.findOne({id});
+    foundAccount.accountValue = accountValue;
+    await accountRepository.save(foundAccount);
   } catch (error) {
     logger.log({ level: 'error', message: error });
   }
