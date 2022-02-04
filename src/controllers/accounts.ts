@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { deleteAccount, findAccounts, saveAccounts } from '../services/accounts';
+import { deleteAccount, findAccounts, saveAccounts, updateAccountValue } from '../services/accounts';
 
 const router = Router();
 
@@ -24,6 +24,13 @@ router.post('/', async (req: Request, res: Response) => {
   return res.json({
     success: true,
     response
+  });
+});
+
+router.post('/updateAccountValue', async (req: Request, res: Response) => {
+  await updateAccountValue(req.body);
+  return res.json({
+    success: true,
   });
 });
 
