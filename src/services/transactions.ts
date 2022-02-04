@@ -17,7 +17,7 @@ export const getTransactions = async (key: any) => {
 
 export const saveTransactions = async (data: TTransaction ) => {
   const { 
-    accountId,
+    account,
     name,
     id,
     date,
@@ -30,7 +30,7 @@ export const saveTransactions = async (data: TTransaction ) => {
   const connect = await connection;
   try {
     const accountRepository = connect.getRepository(Account);
-    const user = await accountRepository.findOne({ id: accountId });
+    const user = await accountRepository.findOne({ id: account });
     const newTranasction: any = {
       account: user.id,
       name, 
