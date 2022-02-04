@@ -1,6 +1,6 @@
 import { connection } from '../database/connection/ormConnection';
 import { Account } from '../database/entity/Account';
-import { IDeleteAccount } from '../types/types';
+import { TDeleteAccount, TUpdateAccountValue } from '../types/types';
 import { logger } from '../utils/logger';
 
 export const findAccounts = async () => {
@@ -28,7 +28,7 @@ export const saveAccounts = async (data: Account) => {
   }
 };
 
-export const deleteAccount = async (data: IDeleteAccount) => {
+export const deleteAccount = async (data: TDeleteAccount) => {
   const { id } = data;
   const connect = await connection;
   try {
@@ -41,7 +41,7 @@ export const deleteAccount = async (data: IDeleteAccount) => {
   }
 };
 
-export const updateAccountValue = async (data: any) => {
+export const updateAccountValue = async (data: TUpdateAccountValue) => {
   const { accountValue, id } = data;
   const connect = await connection;
   try {
