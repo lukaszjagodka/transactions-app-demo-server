@@ -33,11 +33,8 @@ export const deleteAccount = async (data: IDeleteAccount) => {
   const connect = await connection;
   try {
     const accountRepository = connect.getRepository(Account);
-    const foundAccount = await accountRepository.findOne({ id });
-    if(foundAccount){
-      await accountRepository.remove(foundAccount);
-    }
-    return 'account has been deleted';
+    const foundAccount = await accountRepository.findOne({id});
+    await accountRepository.remove(foundAccount);
   } catch (error) {
     logger.log({ level: 'error', message: error });
   }
