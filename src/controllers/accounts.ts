@@ -28,8 +28,11 @@ router.post('/', async (req: Request, res: Response) => {
   });
 });
 
-router.post('/updateAccountValue', async (req: Request, res: Response) => {
-  await updateAccountValue(req.body);
+router.put('/', async (req: Request, res: Response) => {
+  const { id } = req.query;
+  const { actualBalance } = req.body;
+  const data = {actualBalance, id: +id };
+  await updateAccountValue(data);
   return res.json({
     success: true,
   });

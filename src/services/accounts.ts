@@ -25,7 +25,6 @@ export const createAccount = async (data: Account) => {
 };
 
 export const deleteAccount = async (id: number) => {
-  // const { id } = data;
   const connect = await connection;
   try {
     const accountRepository = connect.getRepository(Account);
@@ -38,12 +37,12 @@ export const deleteAccount = async (id: number) => {
 };
 
 export const updateAccountValue = async (data: TUpdateAccountValue) => {
-  const { accountValue, id } = data;
+  const { actualBalance, id } = data;
   const connect = await connection;
   try {
     const accountRepository = connect.getRepository(Account);
     const foundAccount = await accountRepository.findOne(id);
-    foundAccount.accountValue = accountValue;
+    foundAccount.accountValue = actualBalance;
     await accountRepository.save(foundAccount);
   } catch (error) {
     logger.log({ level: 'error', message: error });
