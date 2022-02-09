@@ -1,6 +1,6 @@
 import { connection } from '../database/connection/ormConnection';
 import { Account } from '../database/entity/Account';
-import { TDeleteAccount, TUpdateAccountValue } from '../types/types';
+import { TUpdateAccountValue } from '../types/types';
 import { logger } from '../utils/logger';
 
 export const findAccounts = async () => {
@@ -24,8 +24,8 @@ export const createAccount = async (data: Account) => {
   }
 };
 
-export const deleteAccount = async (data: TDeleteAccount) => {
-  const { id } = data;
+export const deleteAccount = async (id: number) => {
+  // const { id } = data;
   const connect = await connection;
   try {
     const accountRepository = connect.getRepository(Account);

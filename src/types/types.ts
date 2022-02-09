@@ -23,10 +23,6 @@ export type TAccount = {
   currency: string
 }
 
-export interface TDeleteAccount {
-  id: number
-}
-
 export type TTransaction = {
   account: number;
   name: string;

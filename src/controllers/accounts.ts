@@ -1,10 +1,11 @@
 import { Request, Response, Router } from 'express';
-import { deleteAccount, findAccounts, saveAccounts, updateAccountValue } from '../services/accounts';
+import { deleteAccount, findAccounts, createAccount, updateAccountValue } from '../services/accounts';
 
 const router = Router();
 
-router.post('/deleteaccount', async (req: Request, res: Response) => {
-  const response = await deleteAccount(req.body);
+router.delete('/', async (req: Request, res: Response) => {
+  const { id } = req.query;
+  const response = await deleteAccount(+id);
   return res.json({
     success: true,
     response
@@ -12,15 +13,15 @@ router.post('/deleteaccount', async (req: Request, res: Response) => {
 });
 
 router.get('/', async (req: Request, res: Response) => {
-  const getAccounts = await findAccounts();
+  const accounts = await findAccounts();
   return res.json({
     success: true,
-    data: getAccounts
+    data: accounts
   });
 });
 
 router.post('/', async (req: Request, res: Response) => {
-  const response = await saveAccounts(req.body);
+  const response = await createAccount(req.body);
   return res.json({
     success: true,
     response
