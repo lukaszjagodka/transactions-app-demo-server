@@ -28,7 +28,7 @@ export class Transaction {
   currencySecondPair: string;
 
   @ManyToOne(type => Account, account => account.transactions, { onDelete: 'CASCADE' })
-  account: Account;
+  account: Partial<Account>;
 
   @CreateDateColumn()
   createdAt: Date;

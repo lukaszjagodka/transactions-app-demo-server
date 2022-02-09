@@ -36,6 +36,6 @@ export type TTransaction = {
 }
 
 export type TUpdateAccountValue = {
-  accountValue: number,
+  actualBalance: number,
   id: number
 }

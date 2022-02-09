@@ -4,7 +4,8 @@ import { getTransactions, saveTransactions } from '../services/transactions';
 const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
-  const response = await getTransactions(req.query);
+  const { id } = req.query;
+  const response = await getTransactions(+id);
   return res.json({
     success: true,
     response
