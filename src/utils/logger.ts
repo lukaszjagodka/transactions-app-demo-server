@@ -1,14 +1,14 @@
 import { createLogger, format, transports } from 'winston';
+import { format as formatFns } from 'date-fns';
 import path from 'path';
 
 const { combine, timestamp, prettyPrint } = format;
 const infoDir = './logs/combined';
 const errorDir = './logs/errors';
 
-const mydate = new Date();
-const today = mydate.getFullYear() + '-' + ('0' + (mydate.getMonth() + 1)).slice(-2) + '-' + mydate.getDate();
-const infoName = today + '-' + 'info.log';
-const errorName = today + '-' + 'error.log';
+const today = formatFns(new Date(), 'yyyy-MM-dd');
+const infoName = `${today}-info.log`;
+const errorName = `${today}-error.log`;
 
 export const logger = createLogger({
   level: 'info',
@@ -22,13 +22,14 @@ export const logger = createLogger({
   defaultMeta: { service: 'logger-service' },
   transports: [
     new transports.File({ 
-      filename: path.join(errorDir, `${errorName}`), 
+      filename: path.join(__dirname, errorDir, `${errorName}`), 
       level: 'error', 
       format: format.combine(
       format.colorize({ all: false }),
-    ) }),
+    )
+  }),
     new transports.File({ 
-      filename: path.join(infoDir, `${infoName}`), 
+      filename: path.join(__dirname, infoDir, `${infoName}`), 
       level: 'info', 
       format: format.combine(
       format.colorize({ all: false }),
