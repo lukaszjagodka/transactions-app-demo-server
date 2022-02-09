@@ -13,16 +13,12 @@ export const findAccounts = async () => {
   }
 };
 
-export const saveAccounts = async (data: Account) => {
-  const { name, accountNumber, accountValue, currency } = data;
+export const createAccount = async (data: Account) => {
   const connect = await connection;
   try {
-    const newAccount: Partial<Account> = {
-      name, accountNumber, accountValue,currency
-    };
-    const account = connect.getRepository(Account).create(newAccount);
-    await connect.getRepository(Account).save(account);
-    return 'account has been saved';
+    const account = connect.getRepository(Account).create(data);
+    const createdAccount = await connect.getRepository(Account).save(account);
+    return createdAccount;
   } catch (error) {
     logger.log({ level: 'error', message: error });
   }
@@ -33,7 +29,7 @@ export const deleteAccount = async (data: TDeleteAccount) => {
   const connect = await connection;
   try {
     const accountRepository = connect.getRepository(Account);
-    const foundAccount = await accountRepository.findOne({id});
+    const foundAccount = await accountRepository.findOne(id);
     await accountRepository.remove(foundAccount);
     return 'account has been deleted';
   } catch (error) {
@@ -46,7 +42,7 @@ export const updateAccountValue = async (data: TUpdateAccountValue) => {
   const connect = await connection;
   try {
     const accountRepository = connect.getRepository(Account);
-    const foundAccount = await accountRepository.findOne({id});
+    const foundAccount = await accountRepository.findOne(id);
     foundAccount.accountValue = accountValue;
     await accountRepository.save(foundAccount);
   } catch (error) {
