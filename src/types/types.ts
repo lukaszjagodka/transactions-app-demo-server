@@ -1,4 +1,4 @@
-export interface IRow {
+export interface TRow {
   currency: string,
   rate: string,
   bid: string,
@@ -15,10 +15,27 @@ export type TPair = {
   value: string
 }
 
-export type IAccount = {
+export type TAccount = {
   id: number
   name: string,
   accountNumber: number,
   accountValue: number,
   currency: string
+}
+
+export type TTransaction = {
+  account: number;
+  name: string;
+  id: number;
+  date: string;
+  amountFirstPair: number;
+  currencyFirstPair: string;
+  rate: number;
+  amountSecondPair: number;
+  currencySecondPair: string;
+}
+
+export type TUpdateAccountValue = {
+  actualBalance: number,
+  id: number
 }

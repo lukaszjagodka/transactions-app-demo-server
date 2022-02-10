@@ -1,21 +1,40 @@
 import { Request, Response, Router } from 'express';
-import { findAccounts, saveAccounts } from '../services/accounts';
+import { deleteAccount, findAccounts, createAccount, updateAccountValue } from '../services/accounts';
 
 const router = Router();
 
-router.get('/', async (req: Request, res: Response) => {
-  const getAccounts = await findAccounts();
+router.delete('/', async (req: Request, res: Response) => {
+  const { id } = req.query;
+  const response = await deleteAccount(+id);
   return res.json({
     success: true,
-    data: getAccounts
+    response
+  });
+});
+
+router.get('/', async (req: Request, res: Response) => {
+  const accounts = await findAccounts();
+  return res.json({
+    success: true,
+    data: accounts
   });
 });
 
 router.post('/', async (req: Request, res: Response) => {
-  const response = await saveAccounts(req.body);
+  const response = await createAccount(req.body);
   return res.json({
     success: true,
     response
+  });
+});
+
+router.put('/', async (req: Request, res: Response) => {
+  const { id } = req.query;
+  const { actualBalance } = req.body;
+  const data = {actualBalance, id: +id };
+  await updateAccountValue(data);
+  return res.json({
+    success: true,
   });
 });
 
