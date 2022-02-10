@@ -6,13 +6,18 @@ import { logger } from '../utils/logger';
 export const findAccounts = async () => {
   try {
     const connect = await connection;
-    const getAccounts = await connect.getRepository(Account).find();
+    const getAccounts = await connect
+      .getRepository(Account)
+      .find({
+        order: {
+          id: 'DESC' 
+        }
+      });
     return getAccounts;
   } catch (error) {
     logger.log({ level: 'error', message: error });
   }
 };
-
 export const createAccount = async (data: Account) => {
   const connect = await connection;
   try {

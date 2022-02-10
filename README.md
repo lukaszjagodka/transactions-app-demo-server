@@ -1,4 +1,4 @@
-The purpose of the application is introduce a currencies change with use a real currency rates.
+  The purpose of the application is introduce a currencies change with use a real currency rates.
 In very simple way we can create account with interest us balance.
 The operation of the application is based on the exchange of information between the client and the server.
 The application server takes care of the up-to-date rates, which are downloaded from the free api 3 times an hour. (It's a maximum number of downloads rates from this api)
